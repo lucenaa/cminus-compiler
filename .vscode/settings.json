@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "analyze.h": "c",
+        "util.h": "c"
+    }
+}

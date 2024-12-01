@@ -1,0 +1,8 @@
+/home/gabriel/ITA/lab-compiladores/lab1/labctc41240814_2156/src/CMakeFiles/mycmcomp.dir
+/home/gabriel/ITA/lab-compiladores/lab1/labctc41240814_2156/src/CMakeFiles/runmycmcomp.dir
+/home/gabriel/ITA/lab-compiladores/lab1/labctc41240814_2156/src/CMakeFiles/rundiff.dir
+/home/gabriel/ITA/lab-compiladores/lab1/labctc41240814_2156/src/CMakeFiles/ddiff.dir
+/home/gabriel/ITA/lab-compiladores/lab1/labctc41240814_2156/src/CMakeFiles/lexdiff.dir
+/home/gabriel/ITA/lab-compiladores/lab1/labctc41240814_2156/src/CMakeFiles/tiny.dir
+/home/gabriel/ITA/lab-compiladores/lab1/labctc41240814_2156/src/CMakeFiles/edit_cache.dir
+/home/gabriel/ITA/lab-compiladores/lab1/labctc41240814_2156/src/CMakeFiles/rebuild_cache.dir

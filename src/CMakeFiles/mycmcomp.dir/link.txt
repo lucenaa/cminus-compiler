@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/mycmcomp.dir/lexer.c.o CMakeFiles/mycmcomp.dir/main.c.o CMakeFiles/mycmcomp.dir/util.c.o CMakeFiles/mycmcomp.dir/lib/log.c.o -o mycmcomp  /usr/lib/x86_64-linux-gnu/libfl.so 

@@ -1,0 +1,1241 @@
+Terminais sem uso na gramática
+
+    ERROR
+
+
+Gramática
+
+    0 $accept: program $end
+
+    1 program: decl_list
+
+    2 decl_list: decl_list decl
+    3          | decl
+
+    4 decl: var_decl
+    5     | fun_decl
+
+    6 var_decl: type_spec ID SEMI
+    7         | type_spec ID LBRACKETS NUM RBRACKETS SEMI
+
+    8 type_spec: INT
+    9          | VOID
+
+   10 fun_decl: type_spec ID LPAREN params RPAREN comp_decl
+
+   11 params: param_list
+   12       | VOID
+
+   13 param_list: param_list COMMA param
+   14           | param
+
+   15 param: type_spec ID
+   16      | type_spec ID LBRACKETS RBRACKETS
+
+   17 comp_decl: LCBRACES loc_decl stmt_list RCBRACES
+
+   18 loc_decl: loc_decl var_decl
+   19         | ε
+
+   20 stmt_list: stmt_list stmt
+   21          | ε
+
+   22 stmt: exp_decl
+   23     | comp_decl
+   24     | sel_decl
+   25     | while_stmt
+   26     | return_stmt
+
+   27 exp_decl: exp SEMI
+   28         | SEMI
+
+   29 sel_decl: IF LPAREN exp RPAREN stmt
+   30         | IF LPAREN exp RPAREN stmt ELSE stmt
+
+   31 while_stmt: WHILE LPAREN exp RPAREN stmt
+
+   32 return_stmt: RETURN SEMI
+   33            | RETURN exp SEMI
+
+   34 exp: var EQ exp
+   35    | simple_exp
+
+   36 var: ID
+   37    | ID LBRACKETS exp RBRACKETS
+
+   38 simple_exp: sum_exp relational sum_exp
+   39           | sum_exp
+
+   40 relational: LEQ
+   41           | LT
+   42           | GT
+   43           | GEQ
+   44           | EQEQ
+   45           | INEQ
+
+   46 sum_exp: sum_exp sum term
+   47        | term
+
+   48 sum: PLUS
+   49    | MINUS
+
+   50 term: term mult factor
+   51     | factor
+
+   52 mult: TIMES
+   53     | OVER
+
+   54 factor: LPAREN exp RPAREN
+   55       | var
+   56       | call
+   57       | NUM
+
+   58 call: ID LPAREN args RPAREN
+
+   59 args: arg_list
+   60     | ε
+
+   61 arg_list: arg_list COMMA exp
+   62         | exp
+
+
+Terminais, com as regras onde eles aparecem
+
+    $end (0) 0
+    error (256)
+    ID <name> (258) 6 7 10 15 16 36 37 58
+    NUM <val> (259) 7 57
+    INT <type> (260) 8
+    VOID <type> (261) 9 12
+    IF (262) 29 30
+    ELSE (263) 30
+    RETURN (264) 32 33
+    WHILE (265) 31
+    ERROR (266)
+    PLUS (267) 48
+    MINUS (268) 49
+    TIMES (269) 52
+    OVER (270) 53
+    LT (271) 41
+    LEQ (272) 40
+    GT (273) 42
+    GEQ (274) 43
+    EQ (275) 34
+    INEQ (276) 45
+    EQEQ (277) 44
+    SEMI (278) 6 7 27 28 32 33
+    COMMA (279) 13 61
+    LPAREN (280) 10 29 30 31 54 58
+    RPAREN (281) 10 29 30 31 54 58
+    LBRACKETS (282) 7 16 37
+    RBRACKETS (283) 7 16 37
+    LCBRACES (284) 17
+    RCBRACES (285) 17
+    LOWER_THAN_ELSE (286)
+
+
+Não terminais com as regras onde eles aparecem
+
+    $accept (32)
+        à esquerda: 0
+    program <node> (33)
+        à esquerda: 1
+        à direita: 0
+    decl_list <node> (34)
+        à esquerda: 2 3
+        à direita: 1 2
+    decl <node> (35)
+        à esquerda: 4 5
+        à direita: 2 3
+    var_decl <node> (36)
+        à esquerda: 6 7
+        à direita: 4 18
+    type_spec <type> (37)
+        à esquerda: 8 9
+        à direita: 6 7 10 15 16
+    fun_decl <node> (38)
+        à esquerda: 10
+        à direita: 5
+    params <node> (39)
+        à esquerda: 11 12
+        à direita: 10
+    param_list <node> (40)
+        à esquerda: 13 14
+        à direita: 11 13
+    param <node> (41)
+        à esquerda: 15 16
+        à direita: 13 14
+    comp_decl <node> (42)
+        à esquerda: 17
+        à direita: 10 23
+    loc_decl <node> (43)
+        à esquerda: 18 19
+        à direita: 17 18
+    stmt_list <node> (44)
+        à esquerda: 20 21
+        à direita: 17 20
+    stmt <node> (45)
+        à esquerda: 22 23 24 25 26
+        à direita: 20 29 30 31
+    exp_decl <node> (46)
+        à esquerda: 27 28
+        à direita: 22
+    sel_decl <node> (47)
+        à esquerda: 29 30
+        à direita: 24
+    while_stmt <node> (48)
+        à esquerda: 31
+        à direita: 25
+    return_stmt <node> (49)
+        à esquerda: 32 33
+        à direita: 26
+    exp <node> (50)
+        à esquerda: 34 35
+        à direita: 27 29 30 31 33 34 37 54 61 62
+    var <node> (51)
+        à esquerda: 36 37
+        à direita: 34 55
+    simple_exp <node> (52)
+        à esquerda: 38 39
+        à direita: 35
+    relational <token> (53)
+        à esquerda: 40 41 42 43 44 45
+        à direita: 38
+    sum_exp <node> (54)
+        à esquerda: 46 47
+        à direita: 38 39 46
+    sum <token> (55)
+        à esquerda: 48 49
+        à direita: 46
+    term <node> (56)
+        à esquerda: 50 51
+        à direita: 46 47 50
+    mult <token> (57)
+        à esquerda: 52 53
+        à direita: 50
+    factor <node> (58)
+        à esquerda: 54 55 56 57
+        à direita: 50 51
+    call <node> (59)
+        à esquerda: 58
+        à direita: 56
+    args <node> (60)
+        à esquerda: 59 60
+        à direita: 58
+    arg_list <node> (61)
+        à esquerda: 61 62
+        à direita: 59 61
+
+
+Estado 0
+
+    0 $accept: • program $end
+
+    INT   deslocar, e ir ao estado 1
+    VOID  deslocar, e ir ao estado 2
+
+    program    ir ao estado 3
+    decl_list  ir ao estado 4
+    decl       ir ao estado 5
+    var_decl   ir ao estado 6
+    type_spec  ir ao estado 7
+    fun_decl   ir ao estado 8
+
+
+Estado 1
+
+    8 type_spec: INT •
+
+    $padrão  reduzir usando a regra 8 (type_spec)
+
+
+Estado 2
+
+    9 type_spec: VOID •
+
+    $padrão  reduzir usando a regra 9 (type_spec)
+
+
+Estado 3
+
+    0 $accept: program • $end
+
+    $end  deslocar, e ir ao estado 9
+
+
+Estado 4
+
+    1 program: decl_list •
+    2 decl_list: decl_list • decl
+
+    INT   deslocar, e ir ao estado 1
+    VOID  deslocar, e ir ao estado 2
+
+    $padrão  reduzir usando a regra 1 (program)
+
+    decl       ir ao estado 10
+    var_decl   ir ao estado 6
+    type_spec  ir ao estado 7
+    fun_decl   ir ao estado 8
+
+
+Estado 5
+
+    3 decl_list: decl •
+
+    $padrão  reduzir usando a regra 3 (decl_list)
+
+
+Estado 6
+
+    4 decl: var_decl •
+
+    $padrão  reduzir usando a regra 4 (decl)
+
+
+Estado 7
+
+    6 var_decl: type_spec • ID SEMI
+    7         | type_spec • ID LBRACKETS NUM RBRACKETS SEMI
+   10 fun_decl: type_spec • ID LPAREN params RPAREN comp_decl
+
+    ID  deslocar, e ir ao estado 11
+
+
+Estado 8
+
+    5 decl: fun_decl •
+
+    $padrão  reduzir usando a regra 5 (decl)
+
+
+Estado 9
+
+    0 $accept: program $end •
+
+    $padrão  aceitar
+
+
+Estado 10
+
+    2 decl_list: decl_list decl •
+
+    $padrão  reduzir usando a regra 2 (decl_list)
+
+
+Estado 11
+
+    6 var_decl: type_spec ID • SEMI
+    7         | type_spec ID • LBRACKETS NUM RBRACKETS SEMI
+   10 fun_decl: type_spec ID • LPAREN params RPAREN comp_decl
+
+    SEMI       deslocar, e ir ao estado 12
+    LPAREN     deslocar, e ir ao estado 13
+    LBRACKETS  deslocar, e ir ao estado 14
+
+
+Estado 12
+
+    6 var_decl: type_spec ID SEMI •
+
+    $padrão  reduzir usando a regra 6 (var_decl)
+
+
+Estado 13
+
+   10 fun_decl: type_spec ID LPAREN • params RPAREN comp_decl
+
+    INT   deslocar, e ir ao estado 1
+    VOID  deslocar, e ir ao estado 15
+
+    type_spec   ir ao estado 16
+    params      ir ao estado 17
+    param_list  ir ao estado 18
+    param       ir ao estado 19
+
+
+Estado 14
+
+    7 var_decl: type_spec ID LBRACKETS • NUM RBRACKETS SEMI
+
+    NUM  deslocar, e ir ao estado 20
+
+
+Estado 15
+
+    9 type_spec: VOID •
+   12 params: VOID •
+
+    RPAREN   reduzir usando a regra 12 (params)
+    $padrão  reduzir usando a regra 9 (type_spec)
+
+
+Estado 16
+
+   15 param: type_spec • ID
+   16      | type_spec • ID LBRACKETS RBRACKETS
+
+    ID  deslocar, e ir ao estado 21
+
+
+Estado 17
+
+   10 fun_decl: type_spec ID LPAREN params • RPAREN comp_decl
+
+    RPAREN  deslocar, e ir ao estado 22
+
+
+Estado 18
+
+   11 params: param_list •
+   13 param_list: param_list • COMMA param
+
+    COMMA  deslocar, e ir ao estado 23
+
+    $padrão  reduzir usando a regra 11 (params)
+
+
+Estado 19
+
+   14 param_list: param •
+
+    $padrão  reduzir usando a regra 14 (param_list)
+
+
+Estado 20
+
+    7 var_decl: type_spec ID LBRACKETS NUM • RBRACKETS SEMI
+
+    RBRACKETS  deslocar, e ir ao estado 24
+
+
+Estado 21
+
+   15 param: type_spec ID •
+   16      | type_spec ID • LBRACKETS RBRACKETS
+
+    LBRACKETS  deslocar, e ir ao estado 25
+
+    $padrão  reduzir usando a regra 15 (param)
+
+
+Estado 22
+
+   10 fun_decl: type_spec ID LPAREN params RPAREN • comp_decl
+
+    LCBRACES  deslocar, e ir ao estado 26
+
+    comp_decl  ir ao estado 27
+
+
+Estado 23
+
+   13 param_list: param_list COMMA • param
+
+    INT   deslocar, e ir ao estado 1
+    VOID  deslocar, e ir ao estado 2
+
+    type_spec  ir ao estado 16
+    param      ir ao estado 28
+
+
+Estado 24
+
+    7 var_decl: type_spec ID LBRACKETS NUM RBRACKETS • SEMI
+
+    SEMI  deslocar, e ir ao estado 29
+
+
+Estado 25
+
+   16 param: type_spec ID LBRACKETS • RBRACKETS
+
+    RBRACKETS  deslocar, e ir ao estado 30
+
+
+Estado 26
+
+   17 comp_decl: LCBRACES • loc_decl stmt_list RCBRACES
+
+    $padrão  reduzir usando a regra 19 (loc_decl)
+
+    loc_decl  ir ao estado 31
+
+
+Estado 27
+
+   10 fun_decl: type_spec ID LPAREN params RPAREN comp_decl •
+
+    $padrão  reduzir usando a regra 10 (fun_decl)
+
+
+Estado 28
+
+   13 param_list: param_list COMMA param •
+
+    $padrão  reduzir usando a regra 13 (param_list)
+
+
+Estado 29
+
+    7 var_decl: type_spec ID LBRACKETS NUM RBRACKETS SEMI •
+
+    $padrão  reduzir usando a regra 7 (var_decl)
+
+
+Estado 30
+
+   16 param: type_spec ID LBRACKETS RBRACKETS •
+
+    $padrão  reduzir usando a regra 16 (param)
+
+
+Estado 31
+
+   17 comp_decl: LCBRACES loc_decl • stmt_list RCBRACES
+   18 loc_decl: loc_decl • var_decl
+
+    INT   deslocar, e ir ao estado 1
+    VOID  deslocar, e ir ao estado 2
+
+    $padrão  reduzir usando a regra 21 (stmt_list)
+
+    var_decl   ir ao estado 32
+    type_spec  ir ao estado 33
+    stmt_list  ir ao estado 34
+
+
+Estado 32
+
+   18 loc_decl: loc_decl var_decl •
+
+    $padrão  reduzir usando a regra 18 (loc_decl)
+
+
+Estado 33
+
+    6 var_decl: type_spec • ID SEMI
+    7         | type_spec • ID LBRACKETS NUM RBRACKETS SEMI
+
+    ID  deslocar, e ir ao estado 35
+
+
+Estado 34
+
+   17 comp_decl: LCBRACES loc_decl stmt_list • RCBRACES
+   20 stmt_list: stmt_list • stmt
+
+    ID        deslocar, e ir ao estado 36
+    NUM       deslocar, e ir ao estado 37
+    IF        deslocar, e ir ao estado 38
+    RETURN    deslocar, e ir ao estado 39
+    WHILE     deslocar, e ir ao estado 40
+    SEMI      deslocar, e ir ao estado 41
+    LPAREN    deslocar, e ir ao estado 42
+    LCBRACES  deslocar, e ir ao estado 26
+    RCBRACES  deslocar, e ir ao estado 43
+
+    comp_decl    ir ao estado 44
+    stmt         ir ao estado 45
+    exp_decl     ir ao estado 46
+    sel_decl     ir ao estado 47
+    while_stmt   ir ao estado 48
+    return_stmt  ir ao estado 49
+    exp          ir ao estado 50
+    var          ir ao estado 51
+    simple_exp   ir ao estado 52
+    sum_exp      ir ao estado 53
+    term         ir ao estado 54
+    factor       ir ao estado 55
+    call         ir ao estado 56
+
+
+Estado 35
+
+    6 var_decl: type_spec ID • SEMI
+    7         | type_spec ID • LBRACKETS NUM RBRACKETS SEMI
+
+    SEMI       deslocar, e ir ao estado 12
+    LBRACKETS  deslocar, e ir ao estado 14
+
+
+Estado 36
+
+   36 var: ID •
+   37    | ID • LBRACKETS exp RBRACKETS
+   58 call: ID • LPAREN args RPAREN
+
+    LPAREN     deslocar, e ir ao estado 57
+    LBRACKETS  deslocar, e ir ao estado 58
+
+    $padrão  reduzir usando a regra 36 (var)
+
+
+Estado 37
+
+   57 factor: NUM •
+
+    $padrão  reduzir usando a regra 57 (factor)
+
+
+Estado 38
+
+   29 sel_decl: IF • LPAREN exp RPAREN stmt
+   30         | IF • LPAREN exp RPAREN stmt ELSE stmt
+
+    LPAREN  deslocar, e ir ao estado 59
+
+
+Estado 39
+
+   32 return_stmt: RETURN • SEMI
+   33            | RETURN • exp SEMI
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    SEMI    deslocar, e ir ao estado 60
+    LPAREN  deslocar, e ir ao estado 42
+
+    exp         ir ao estado 61
+    var         ir ao estado 51
+    simple_exp  ir ao estado 52
+    sum_exp     ir ao estado 53
+    term        ir ao estado 54
+    factor      ir ao estado 55
+    call        ir ao estado 56
+
+
+Estado 40
+
+   31 while_stmt: WHILE • LPAREN exp RPAREN stmt
+
+    LPAREN  deslocar, e ir ao estado 62
+
+
+Estado 41
+
+   28 exp_decl: SEMI •
+
+    $padrão  reduzir usando a regra 28 (exp_decl)
+
+
+Estado 42
+
+   54 factor: LPAREN • exp RPAREN
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    exp         ir ao estado 63
+    var         ir ao estado 51
+    simple_exp  ir ao estado 52
+    sum_exp     ir ao estado 53
+    term        ir ao estado 54
+    factor      ir ao estado 55
+    call        ir ao estado 56
+
+
+Estado 43
+
+   17 comp_decl: LCBRACES loc_decl stmt_list RCBRACES •
+
+    $padrão  reduzir usando a regra 17 (comp_decl)
+
+
+Estado 44
+
+   23 stmt: comp_decl •
+
+    $padrão  reduzir usando a regra 23 (stmt)
+
+
+Estado 45
+
+   20 stmt_list: stmt_list stmt •
+
+    $padrão  reduzir usando a regra 20 (stmt_list)
+
+
+Estado 46
+
+   22 stmt: exp_decl •
+
+    $padrão  reduzir usando a regra 22 (stmt)
+
+
+Estado 47
+
+   24 stmt: sel_decl •
+
+    $padrão  reduzir usando a regra 24 (stmt)
+
+
+Estado 48
+
+   25 stmt: while_stmt •
+
+    $padrão  reduzir usando a regra 25 (stmt)
+
+
+Estado 49
+
+   26 stmt: return_stmt •
+
+    $padrão  reduzir usando a regra 26 (stmt)
+
+
+Estado 50
+
+   27 exp_decl: exp • SEMI
+
+    SEMI  deslocar, e ir ao estado 64
+
+
+Estado 51
+
+   34 exp: var • EQ exp
+   55 factor: var •
+
+    EQ  deslocar, e ir ao estado 65
+
+    $padrão  reduzir usando a regra 55 (factor)
+
+
+Estado 52
+
+   35 exp: simple_exp •
+
+    $padrão  reduzir usando a regra 35 (exp)
+
+
+Estado 53
+
+   38 simple_exp: sum_exp • relational sum_exp
+   39           | sum_exp •
+   46 sum_exp: sum_exp • sum term
+
+    PLUS   deslocar, e ir ao estado 66
+    MINUS  deslocar, e ir ao estado 67
+    LT     deslocar, e ir ao estado 68
+    LEQ    deslocar, e ir ao estado 69
+    GT     deslocar, e ir ao estado 70
+    GEQ    deslocar, e ir ao estado 71
+    INEQ   deslocar, e ir ao estado 72
+    EQEQ   deslocar, e ir ao estado 73
+
+    $padrão  reduzir usando a regra 39 (simple_exp)
+
+    relational  ir ao estado 74
+    sum         ir ao estado 75
+
+
+Estado 54
+
+   47 sum_exp: term •
+   50 term: term • mult factor
+
+    TIMES  deslocar, e ir ao estado 76
+    OVER   deslocar, e ir ao estado 77
+
+    $padrão  reduzir usando a regra 47 (sum_exp)
+
+    mult  ir ao estado 78
+
+
+Estado 55
+
+   51 term: factor •
+
+    $padrão  reduzir usando a regra 51 (term)
+
+
+Estado 56
+
+   56 factor: call •
+
+    $padrão  reduzir usando a regra 56 (factor)
+
+
+Estado 57
+
+   58 call: ID LPAREN • args RPAREN
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    $padrão  reduzir usando a regra 60 (args)
+
+    exp         ir ao estado 79
+    var         ir ao estado 51
+    simple_exp  ir ao estado 52
+    sum_exp     ir ao estado 53
+    term        ir ao estado 54
+    factor      ir ao estado 55
+    call        ir ao estado 56
+    args        ir ao estado 80
+    arg_list    ir ao estado 81
+
+
+Estado 58
+
+   37 var: ID LBRACKETS • exp RBRACKETS
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    exp         ir ao estado 82
+    var         ir ao estado 51
+    simple_exp  ir ao estado 52
+    sum_exp     ir ao estado 53
+    term        ir ao estado 54
+    factor      ir ao estado 55
+    call        ir ao estado 56
+
+
+Estado 59
+
+   29 sel_decl: IF LPAREN • exp RPAREN stmt
+   30         | IF LPAREN • exp RPAREN stmt ELSE stmt
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    exp         ir ao estado 83
+    var         ir ao estado 51
+    simple_exp  ir ao estado 52
+    sum_exp     ir ao estado 53
+    term        ir ao estado 54
+    factor      ir ao estado 55
+    call        ir ao estado 56
+
+
+Estado 60
+
+   32 return_stmt: RETURN SEMI •
+
+    $padrão  reduzir usando a regra 32 (return_stmt)
+
+
+Estado 61
+
+   33 return_stmt: RETURN exp • SEMI
+
+    SEMI  deslocar, e ir ao estado 84
+
+
+Estado 62
+
+   31 while_stmt: WHILE LPAREN • exp RPAREN stmt
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    exp         ir ao estado 85
+    var         ir ao estado 51
+    simple_exp  ir ao estado 52
+    sum_exp     ir ao estado 53
+    term        ir ao estado 54
+    factor      ir ao estado 55
+    call        ir ao estado 56
+
+
+Estado 63
+
+   54 factor: LPAREN exp • RPAREN
+
+    RPAREN  deslocar, e ir ao estado 86
+
+
+Estado 64
+
+   27 exp_decl: exp SEMI •
+
+    $padrão  reduzir usando a regra 27 (exp_decl)
+
+
+Estado 65
+
+   34 exp: var EQ • exp
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    exp         ir ao estado 87
+    var         ir ao estado 51
+    simple_exp  ir ao estado 52
+    sum_exp     ir ao estado 53
+    term        ir ao estado 54
+    factor      ir ao estado 55
+    call        ir ao estado 56
+
+
+Estado 66
+
+   48 sum: PLUS •
+
+    $padrão  reduzir usando a regra 48 (sum)
+
+
+Estado 67
+
+   49 sum: MINUS •
+
+    $padrão  reduzir usando a regra 49 (sum)
+
+
+Estado 68
+
+   41 relational: LT •
+
+    $padrão  reduzir usando a regra 41 (relational)
+
+
+Estado 69
+
+   40 relational: LEQ •
+
+    $padrão  reduzir usando a regra 40 (relational)
+
+
+Estado 70
+
+   42 relational: GT •
+
+    $padrão  reduzir usando a regra 42 (relational)
+
+
+Estado 71
+
+   43 relational: GEQ •
+
+    $padrão  reduzir usando a regra 43 (relational)
+
+
+Estado 72
+
+   45 relational: INEQ •
+
+    $padrão  reduzir usando a regra 45 (relational)
+
+
+Estado 73
+
+   44 relational: EQEQ •
+
+    $padrão  reduzir usando a regra 44 (relational)
+
+
+Estado 74
+
+   38 simple_exp: sum_exp relational • sum_exp
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    var      ir ao estado 88
+    sum_exp  ir ao estado 89
+    term     ir ao estado 54
+    factor   ir ao estado 55
+    call     ir ao estado 56
+
+
+Estado 75
+
+   46 sum_exp: sum_exp sum • term
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    var     ir ao estado 88
+    term    ir ao estado 90
+    factor  ir ao estado 55
+    call    ir ao estado 56
+
+
+Estado 76
+
+   52 mult: TIMES •
+
+    $padrão  reduzir usando a regra 52 (mult)
+
+
+Estado 77
+
+   53 mult: OVER •
+
+    $padrão  reduzir usando a regra 53 (mult)
+
+
+Estado 78
+
+   50 term: term mult • factor
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    var     ir ao estado 88
+    factor  ir ao estado 91
+    call    ir ao estado 56
+
+
+Estado 79
+
+   62 arg_list: exp •
+
+    $padrão  reduzir usando a regra 62 (arg_list)
+
+
+Estado 80
+
+   58 call: ID LPAREN args • RPAREN
+
+    RPAREN  deslocar, e ir ao estado 92
+
+
+Estado 81
+
+   59 args: arg_list •
+   61 arg_list: arg_list • COMMA exp
+
+    COMMA  deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 59 (args)
+
+
+Estado 82
+
+   37 var: ID LBRACKETS exp • RBRACKETS
+
+    RBRACKETS  deslocar, e ir ao estado 94
+
+
+Estado 83
+
+   29 sel_decl: IF LPAREN exp • RPAREN stmt
+   30         | IF LPAREN exp • RPAREN stmt ELSE stmt
+
+    RPAREN  deslocar, e ir ao estado 95
+
+
+Estado 84
+
+   33 return_stmt: RETURN exp SEMI •
+
+    $padrão  reduzir usando a regra 33 (return_stmt)
+
+
+Estado 85
+
+   31 while_stmt: WHILE LPAREN exp • RPAREN stmt
+
+    RPAREN  deslocar, e ir ao estado 96
+
+
+Estado 86
+
+   54 factor: LPAREN exp RPAREN •
+
+    $padrão  reduzir usando a regra 54 (factor)
+
+
+Estado 87
+
+   34 exp: var EQ exp •
+
+    $padrão  reduzir usando a regra 34 (exp)
+
+
+Estado 88
+
+   55 factor: var •
+
+    $padrão  reduzir usando a regra 55 (factor)
+
+
+Estado 89
+
+   38 simple_exp: sum_exp relational sum_exp •
+   46 sum_exp: sum_exp • sum term
+
+    PLUS   deslocar, e ir ao estado 66
+    MINUS  deslocar, e ir ao estado 67
+
+    $padrão  reduzir usando a regra 38 (simple_exp)
+
+    sum  ir ao estado 75
+
+
+Estado 90
+
+   46 sum_exp: sum_exp sum term •
+   50 term: term • mult factor
+
+    TIMES  deslocar, e ir ao estado 76
+    OVER   deslocar, e ir ao estado 77
+
+    $padrão  reduzir usando a regra 46 (sum_exp)
+
+    mult  ir ao estado 78
+
+
+Estado 91
+
+   50 term: term mult factor •
+
+    $padrão  reduzir usando a regra 50 (term)
+
+
+Estado 92
+
+   58 call: ID LPAREN args RPAREN •
+
+    $padrão  reduzir usando a regra 58 (call)
+
+
+Estado 93
+
+   61 arg_list: arg_list COMMA • exp
+
+    ID      deslocar, e ir ao estado 36
+    NUM     deslocar, e ir ao estado 37
+    LPAREN  deslocar, e ir ao estado 42
+
+    exp         ir ao estado 97
+    var         ir ao estado 51
+    simple_exp  ir ao estado 52
+    sum_exp     ir ao estado 53
+    term        ir ao estado 54
+    factor      ir ao estado 55
+    call        ir ao estado 56
+
+
+Estado 94
+
+   37 var: ID LBRACKETS exp RBRACKETS •
+
+    $padrão  reduzir usando a regra 37 (var)
+
+
+Estado 95
+
+   29 sel_decl: IF LPAREN exp RPAREN • stmt
+   30         | IF LPAREN exp RPAREN • stmt ELSE stmt
+
+    ID        deslocar, e ir ao estado 36
+    NUM       deslocar, e ir ao estado 37
+    IF        deslocar, e ir ao estado 38
+    RETURN    deslocar, e ir ao estado 39
+    WHILE     deslocar, e ir ao estado 40
+    SEMI      deslocar, e ir ao estado 41
+    LPAREN    deslocar, e ir ao estado 42
+    LCBRACES  deslocar, e ir ao estado 26
+
+    comp_decl    ir ao estado 44
+    stmt         ir ao estado 98
+    exp_decl     ir ao estado 46
+    sel_decl     ir ao estado 47
+    while_stmt   ir ao estado 48
+    return_stmt  ir ao estado 49
+    exp          ir ao estado 50
+    var          ir ao estado 51
+    simple_exp   ir ao estado 52
+    sum_exp      ir ao estado 53
+    term         ir ao estado 54
+    factor       ir ao estado 55
+    call         ir ao estado 56
+
+
+Estado 96
+
+   31 while_stmt: WHILE LPAREN exp RPAREN • stmt
+
+    ID        deslocar, e ir ao estado 36
+    NUM       deslocar, e ir ao estado 37
+    IF        deslocar, e ir ao estado 38
+    RETURN    deslocar, e ir ao estado 39
+    WHILE     deslocar, e ir ao estado 40
+    SEMI      deslocar, e ir ao estado 41
+    LPAREN    deslocar, e ir ao estado 42
+    LCBRACES  deslocar, e ir ao estado 26
+
+    comp_decl    ir ao estado 44
+    stmt         ir ao estado 99
+    exp_decl     ir ao estado 46
+    sel_decl     ir ao estado 47
+    while_stmt   ir ao estado 48
+    return_stmt  ir ao estado 49
+    exp          ir ao estado 50
+    var          ir ao estado 51
+    simple_exp   ir ao estado 52
+    sum_exp      ir ao estado 53
+    term         ir ao estado 54
+    factor       ir ao estado 55
+    call         ir ao estado 56
+
+
+Estado 97
+
+   61 arg_list: arg_list COMMA exp •
+
+    $padrão  reduzir usando a regra 61 (arg_list)
+
+
+Estado 98
+
+   29 sel_decl: IF LPAREN exp RPAREN stmt •
+   30         | IF LPAREN exp RPAREN stmt • ELSE stmt
+
+    ELSE  deslocar, e ir ao estado 100
+
+    $padrão  reduzir usando a regra 29 (sel_decl)
+
+
+Estado 99
+
+   31 while_stmt: WHILE LPAREN exp RPAREN stmt •
+
+    $padrão  reduzir usando a regra 31 (while_stmt)
+
+
+Estado 100
+
+   30 sel_decl: IF LPAREN exp RPAREN stmt ELSE • stmt
+
+    ID        deslocar, e ir ao estado 36
+    NUM       deslocar, e ir ao estado 37
+    IF        deslocar, e ir ao estado 38
+    RETURN    deslocar, e ir ao estado 39
+    WHILE     deslocar, e ir ao estado 40
+    SEMI      deslocar, e ir ao estado 41
+    LPAREN    deslocar, e ir ao estado 42
+    LCBRACES  deslocar, e ir ao estado 26
+
+    comp_decl    ir ao estado 44
+    stmt         ir ao estado 101
+    exp_decl     ir ao estado 46
+    sel_decl     ir ao estado 47
+    while_stmt   ir ao estado 48
+    return_stmt  ir ao estado 49
+    exp          ir ao estado 50
+    var          ir ao estado 51
+    simple_exp   ir ao estado 52
+    sum_exp      ir ao estado 53
+    term         ir ao estado 54
+    factor       ir ao estado 55
+    call         ir ao estado 56
+
+
+Estado 101
+
+   30 sel_decl: IF LPAREN exp RPAREN stmt ELSE stmt •
+
+    $padrão  reduzir usando a regra 30 (sel_decl)

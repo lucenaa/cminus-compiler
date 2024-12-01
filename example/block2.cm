@@ -1,0 +1,27 @@
+/* Variaveis em blocos aninhados */
+void teste(int b, int a) 
+{ /* Formatação dos blocos */
+    output(a);
+    output(b);
+    { /* Bloco aninhado */
+        int a; /* Declarações antes de uso */
+        int b;
+        a = 3;
+        b = 4;
+        output(a);
+        output(b);
+    }
+    a = 5;
+    output(a);
+}
+
+void main(void) 
+{
+    int a; /* Declarações agrupadas no início */
+    int b;
+    a = 1;
+    b = 2;
+    teste(a,b);
+    output(a);
+    output(b);
+}
